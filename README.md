@@ -11,23 +11,14 @@ Planning:
 Features:
 Isometric View
 
-Import spritesheets for farmville
+Import images of plots and store icons for farmville
 
 Store: 
-Seeds:
-Strawberries
-Cranberries
-Corn
-Rice
-Carrots
-Watermelons
-Pineapples
-Tomato
-Potato
-Parsnips
-Blueberries
-Peppers
-Peas
-Onions
-Cucumbers
+Seeds of various crops
+Animals (pigs, chickens, cows etc.)
+
+;-----------------------
+Methods:
+plow: on mouse click a basicplot appears on the screen
+
 
