@@ -45,9 +45,11 @@ JANUARY 9TH 2015
 -Started Official Project Code
 Although it was a slow start...
 
+JANUARY 10TH 2015
+-creating quadrilaterals for plot or spaces
+
 
 ;-----------------------
 Methods:
 plow: on mouse click a basicplot appears on the screen
-
 
