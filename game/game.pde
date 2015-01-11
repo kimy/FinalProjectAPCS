@@ -11,19 +11,19 @@ void draw(){
 }
 
 void plots(){
-  img = loadImage("pictures/basicPlot.png");
-  for (int i=0;i<1000;i+=200){
-    for (int j=0;j<800;j+=100){
+  img = loadImage("resized/basicplot.png");
+  for (int i=0;i<1000;i+=100){
+    for (int j=0;j<800;j+=50){
       image(img,i,j);
       noFill();
-      quad(i,j+50,i+100,j+100,i+200,j+50,i+100,j);
+      quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
   }
-  for (int x=100;x<900;x+=200){
-    for (int y=50;y<750;y+=100){
+  for (int x=50;x<950;x+=100){
+    for (int y=25;y<775;y+=50){
       image(img,x,y);
       noFill();
-      quad(x,y+50,x+100,y+100,x+200,y+50,x+100,y);
+      quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
     }
   }
 }
