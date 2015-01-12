@@ -15,7 +15,7 @@ void draw(){
 void plots(){
   img = loadImage("resized/basicplot.png");
   int index=0;
-  icors=new int[1000][4];
+  icors=new int[500][4];
   for (int i=0;i<1000;i+=100){
     for (int j=0;j<800;j+=50){
       image(img,i,j);
@@ -47,8 +47,8 @@ void plots(){
 
 void mouseInRng(){
   for (int[] element : icors){
-    if (((mouseX>element[0]) && (mouseX<=element[1])) &&
-        ((mouseY>element[2]) && (mouseY<=element[3]))){
+    if (((mouseX>element[0]+30) && (mouseX<=element[1]-30)) &&
+        ((mouseY>element[2]+15) && (mouseY<=element[3]-15))){
           stroke(#FA780D);
           quad(element[0],element[2]+25,element[0]+50,element[2]+50,element[0]+100,element[2]+25,element[0]+50,element[2]);
           break;
