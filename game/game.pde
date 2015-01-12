@@ -13,8 +13,10 @@ void draw(){
   hoverSelect();
 }
 
+BasicPlot a = new BasicPlot("plowed", "resized/basicplot.png");
+
 void plots(){
-  img = loadImage("resized/basicplot.png");
+  img = loadImage(a.getImgPath());
   int index=0;
   icors=new int[500][4];
   for (int i=0;i<1000;i+=100){
@@ -72,10 +74,5 @@ void mouseClicked(){
     //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
 }
-
-
-
-
-
 
 

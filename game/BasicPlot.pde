@@ -21,6 +21,7 @@ class BasicPlot{
   }
   
   void setImg(String p){
+    imgPath = p;
     img=loadImage(p);
   }
   
