@@ -9,7 +9,7 @@ void setup(){
 
 void draw(){
   setup();
-  mouseInRng();
+  hoverSelect();
 }
 
 void plots(){
@@ -18,7 +18,7 @@ void plots(){
   icors=new int[500][4];
   for (int i=0;i<1000;i+=100){
     for (int j=0;j<800;j+=50){
-      image(img,i,j);
+      //image(img,i,j);
       icors[index][0]=i;
       icors[index][1]=i+100;
       icors[index][2]=j;
@@ -31,7 +31,7 @@ void plots(){
   index=1;
   for (int x=50;x<950;x+=100){
     for (int y=25;y<775;y+=50){
-      image(img,x,y);
+      //image(img,x,y);
       icors[index][0]=x;
       icors[index][1]=x+100;
       icors[index][2]=y;
@@ -44,17 +44,35 @@ void plots(){
 }
 
 
-
-void mouseInRng(){
-  for (int[] element : icors){
-    if (((mouseX>element[0]+30) && (mouseX<=element[1]-30)) &&
-        ((mouseY>element[2]+15) && (mouseY<=element[3]-15))){
-          stroke(#FA780D);
-          quad(element[0],element[2]+25,element[0]+50,element[2]+50,element[0]+100,element[2]+25,element[0]+50,element[2]);
-          break;
+boolean mouseInRng(){
+  for (int i=0;i<500;i++){
+    if (((mouseX>icors[i][0]+30) && (mouseX<=icors[i][1]-30)) &&
+        ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))){
+          
+          return true;
         }
   }
+  
+  return false;
 }
+
+void hoverSelect(){
+  int i=0;
+  if (mouseInRng()){
+    stroke(#FA780D);
+    quad(icors[i][0],icors[i][2]+25,icors[i][0]+50,icors[i][2]+50,icors[i][0]+100,icors[i][2]+25,icors[i][0]+50,icors[i][2]);
+  }
+}
+
+void mouseClicked(){
+  int i=0;
+  if (mouseInRng()){
+    stroke(#FA780D);
+    quad(icors[i][0],icors[i][2]+25,icors[i][0]+50,icors[i][2]+50,icors[i][0]+100,icors[i][2]+25,icors[i][0]+50,icors[i][2]);
+  }
+}
+
+
 
 
 
