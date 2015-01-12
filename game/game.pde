@@ -1,5 +1,6 @@
-PImage img;
+PImage img, basicPlot;
 int[][] icors;
+int x;
 
 void setup(){
   size(1000,800);
@@ -48,27 +49,27 @@ boolean mouseInRng(){
   for (int i=0;i<500;i++){
     if (((mouseX>icors[i][0]+30) && (mouseX<=icors[i][1]-30)) &&
         ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))){
-          
+          x = i;
           return true;
         }
   }
-  
+  x = 0;
   return false;
 }
 
 void hoverSelect(){
-  int i=0;
   if (mouseInRng()){
     stroke(#FA780D);
-    quad(icors[i][0],icors[i][2]+25,icors[i][0]+50,icors[i][2]+50,icors[i][0]+100,icors[i][2]+25,icors[i][0]+50,icors[i][2]);
+    quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
 }
 
 void mouseClicked(){
-  int i=0;
   if (mouseInRng()){
     stroke(#FA780D);
-    quad(icors[i][0],icors[i][2]+25,icors[i][0]+50,icors[i][2]+50,icors[i][0]+100,icors[i][2]+25,icors[i][0]+50,icors[i][2]);
+    basicPlot = loadImage("resized/basicplot.png");
+    image(basicPlot, icors[x][0], icors[x][2]);
+    //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
 }
 
