@@ -7,6 +7,11 @@ class BasicPlot{
     this("plowed","resized/basicplot.png");
   }
   
+  BasicPlot(String cond){
+    setStatus(cond);
+    setImg("resized/basicplot.png");
+  }
+  
   BasicPlot(String cond, String p){
     setStatus(cond);
     setImg(p);
