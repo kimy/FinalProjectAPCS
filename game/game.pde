@@ -1,7 +1,7 @@
 PImage img, basicPlot;
 int[][] icors;
 int x;
-BasicPlot[][] farm;
+BasicPlot[] farm;
 
 void setup() {
   size(1000, 800);
@@ -11,7 +11,7 @@ void setup() {
 }
 
 void draw() {
-  setup();
+  //setup();
   hoverSelect();
 }
 
@@ -72,7 +72,7 @@ void hoverSelect() {
 
 void mouseClicked() {
   if (mouseInRng()) {
-    stroke(#FA780D);
+    //stroke(#FA780D);
     plow();
     //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
