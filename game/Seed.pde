@@ -14,5 +14,15 @@ Seed(String cond, String p){
  super(cond, p);
 }
 
+void setType(String t){
+  type = t;
+}
+
+String getType(){
+  return type;
+}
+
+
+
 
 }
