@@ -1,11 +1,16 @@
 PImage img, basicPlot;
 int[][] icors;
 int x;
+String[][] pics;
+boolean placed;
 
 void setup(){
   size(1000,800);
   background(#52F08A);
   plots();
+  if (placed){
+    image(basicPlot, icors[x][0], icors[x][2]);
+  }
 }
 
 void draw(){
@@ -16,6 +21,7 @@ void draw(){
 BasicPlot a = new BasicPlot("plowed", "resized/basicplot.png");
 
 void plots(){
+  setPics();
   img = loadImage(a.getImgPath());
   int index=0;
   icors=new int[500][4];
@@ -55,7 +61,7 @@ boolean mouseInRng(){
           return true;
         }
   }
-  x = 0;
+  //x = 0;
   return false;
 }
 
@@ -70,9 +76,29 @@ void mouseClicked(){
   if (mouseInRng()){
     stroke(#FA780D);
     basicPlot = loadImage("resized/basicplot.png");
-    image(basicPlot, icors[x][0], icors[x][2]);
+    placed=true;
     //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
 }
+
+void setPics(){
+  pics=new String[6][6];
+  for (int i=0;i<5;i++){
+    pics[i][0]="resized/field_bean_";
+    pics[i][1]="resized/long_onion_";
+    pics[i][2]="resized/super_cranberry_";
+    pics[i][3]="resized/super_pepper_";
+    pics[i][4]="resized/super_strawberry_";
+    pics[i][5]="resized/white_corn_";
+  }
+  for (int j=0;j<5;j++){
+    pics[0][j]+="00.png";
+    pics[1][j]+="33.png";
+    pics[2][j]+="66.png";
+    pics[3][j]+="100.png";
+    pics[4][j]+="extra100.png";
+  }
+}
+
 
 
