@@ -1,7 +1,7 @@
 PImage img, basicPlot;
 int[][] icors;
 int x;
-
+BasicPlot[][] farm;
 
 void setup() {
   size(1000, 800);
@@ -11,6 +11,7 @@ void setup() {
 }
 
 void draw() {
+  setup();
   hoverSelect();
 }
 
