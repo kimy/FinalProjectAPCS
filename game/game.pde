@@ -2,26 +2,26 @@ PImage img, basicPlot;
 int[][] icors;
 int x;
 
-void setup(){
-  size(1000,800);
+
+void setup() {
+  size(1000, 800);
   background(#52F08A);
   plots();
-  hoverSelect();
+  //hoverSelect();
 }
 
-void draw(){
-  setup();
-  //hoverSelect();
+void draw() {
+  hoverSelect();
 }
 
 BasicPlot a = new BasicPlot("plowed", "resized/basicplot.png");
 
-void plots(){
+void plots() {
   img = loadImage(a.getImgPath());
   int index=0;
   icors=new int[500][4];
-  for (int i=0;i<1000;i+=100){
-    for (int j=0;j<800;j+=50){
+  for (int i=0; i<1000; i+=100) {
+    for (int j=0; j<800; j+=50) {
       //image(img,i,j);
       icors[index][0]=i;
       icors[index][1]=i+100;
@@ -29,12 +29,12 @@ void plots(){
       icors[index][3]=j+50;
       index+=2;
       noFill();
-     // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
+      // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
   }
   index=1;
-  for (int x=50;x<950;x+=100){
-    for (int y=25;y<775;y+=50){
+  for (int x=50; x<950; x+=100) {
+    for (int y=25; y<775; y+=50) {
       //image(img,x,y);
       icors[index][0]=x;
       icors[index][1]=x+100;
@@ -42,38 +42,43 @@ void plots(){
       icors[index][3]=y+50;
       index+=2;
       noFill();
-     // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
+      // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
     }
   }
 }
 
 
 boolean mouseInRng(){
-  for (int i=0;i<500;i++){
-    if (((mouseX>icors[i][0]+30) && (mouseX<=icors[i][1]-30)) &&
-        ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))){
-          x = i;
-          return true;
-        }
+  for (int i=0; i<500; i++) {
+    if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
+      ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
+      x = i;
+      return true;
+    }
   }
   x = 0;
   return false;
 }
 
-void hoverSelect(){
-  if (mouseInRng()){
+void hoverSelect() {
+  if (mouseInRng()) {
     stroke(#FA780D);
-    quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
+    quad(icors[x][0], icors[x][2]+25, icors[x][0]+50, icors[x][2]+50, icors[x][0]+100, icors[x][2]+25, icors[x][0]+50, icors[x][2]);
+  }else{
+    noStroke();
   }
 }
 
-void mouseClicked(){
-  if (mouseInRng()){
+void mouseClicked() {
+  if (mouseInRng()) {
     stroke(#FA780D);
-    basicPlot = loadImage("resized/basicplot.png");
-    image(basicPlot, icors[x][0], icors[x][2]);
+    plow();
     //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
 }
 
+void plow() {
+  basicPlot = loadImage("resized/basicplot.png");
+  image(basicPlot, icors[x][0], icors[x][2]);
+}
 
