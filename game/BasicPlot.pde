@@ -41,8 +41,6 @@ class BasicPlot {
     return ycor;
   }
 
-
-
   void setStatus(String cond) {
     status=cond;
   }

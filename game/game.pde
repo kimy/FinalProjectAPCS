@@ -1,21 +1,25 @@
 PImage img, basicPlot;
 int[][] icors;
 int x;
-BasicPlot[] farm = new BasicPlot[320];
+
+BasicPlot[] farm;
 
 void setup() {
   size(1000, 800);
   background(#5BA751);
+  farm = new BasicPlot[320];
   plots();
+
   //hoverSelect();
 }
 
 void draw() {
-  setup();
+  background(#5BA751);
   //size(1000, 800);
   //background(#5BA751);
   //plots();
   hoverSelect();
+  //farming();
 }
 
 void plots() {
@@ -30,8 +34,13 @@ void plots() {
       icors[index][1]=i+100;
       icors[index][2]=j;
       icors[index][3]=j+50;
-      farm[index] = new BasicPlot("empty", "revised/basicplot.png", i, j);
+      farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
+      println(index);
+      if(i >= 800){
+        index += 1;
+      }else{
       index+=2;
+      }
       noFill();
       // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
@@ -46,7 +55,8 @@ void plots() {
       icors[index][1]=x+100;
       icors[index][2]=y;
       icors[index][3]=y+50;
-      farm[index] = new BasicPlot("empty", "revised/basicplot.png", x, y);
+      farm[index] = new BasicPlot("empty", "resized/basicplot.png", x, y);
+      println(index);
       index+=2;
       noFill();
       // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
@@ -54,6 +64,21 @@ void plots() {
   }
 }
 
+/*
+void farming() {
+  PImage plot; 
+  for (int i=0; i<319; i++) {
+    println(i);
+    BasicPlot temp = farm[i];
+    String temp2 = temp.getStatus();
+    boolean temp3 = temp2.equals("plowed");
+    if (farm[i].getStatus().equals("plowed")) {
+      plot = loadImage(farm[i].getImgPath());
+      image(plot, farm[i].getXcor(), farm[i].getYcor());
+    }
+  }
+}
+*/
 
 boolean mouseInRng() {
   for (int i=0; i<320; i++) {
@@ -84,8 +109,8 @@ void mouseClicked() {
 }
 
 void plow() {  
-  basicPlot = loadImage("resized/basicplot.png");
-  image(basicPlot, icors[x][0], icors[x][2]);
+  //basicPlot = loadImage("resized/basicplot.png");
+  //image(basicPlot, icors[x][0], icors[x][2]);
   farm[x].setImg("resized/basicplot.png");
   farm[x].setStatus("plowed");
 }
