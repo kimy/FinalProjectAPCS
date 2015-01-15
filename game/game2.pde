@@ -1,4 +1,4 @@
-PImage img, basicPlot;
+/*PImage img, basicPlot;
 int[][] icors;
 int x, current;
 BasicPlot[] farm;
@@ -108,4 +108,5 @@ void placedPlots(){
     }
   }
 }
+*/
 

@@ -7,7 +7,7 @@ BasicPlot[] farm;
 void setup() {
   size(1000, 800);
   background(#5BA751);
-  farm = new BasicPlot[320];
+  farm = new BasicPlot[500];
   plots();
 
   //hoverSelect();
@@ -19,52 +19,69 @@ void draw() {
   //background(#5BA751);
   //plots();
   hoverSelect();
-  //farming();
+  farming();
 }
 
 void plots() {
-  //img = loadImage("resized/basicplot.png");
+  img = loadImage("resized/basicplot.png");
   int index=0;
-  icors=new int[320][4];
+  icors=new int[500][4];
+  //double row; 
+  //double col;
+
+  /*
+for(col = 0; col<9;col+= 0.5){
+   for(row=0; row<16; row+= 0.5){
+   int x = (int)col*100;
+   int y = (int)row*50;
+   image(img,x,y);
+   println(index);
+   icors[index][0] = x;
+   icors[index][1] = x + 100;
+   icors[index][2] = y;
+   icors[index][3] = y + 50;
+   farm[index] = new BasicPlot("empty", "resized/basicplot.png", x, y);
+   index += 1;
+   }
+   }
+   */
 
   for (int i=0; i<1000; i+=100) {
     for (int j=0; j<800; j+=50) {
-      //image(img,i,j);
+      image(img, i, j);
       icors[index][0]=i;
       icors[index][1]=i+100;
       icors[index][2]=j;
       icors[index][3]=j+50;
       farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
-      println(index);
-      if(i >= 800){
-        index += 1;
-      }else{
+      //println(index);
       index+=2;
-      }
       noFill();
       // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
+    index-=1;
   }
 
   index=1;
 
   for (int x=50; x<950; x+=100) {
     for (int y=25; y<775; y+=50) {
-      //image(img,x,y);
+      image(img, x, y);
       icors[index][0]=x;
       icors[index][1]=x+100;
       icors[index][2]=y;
       icors[index][3]=y+50;
       farm[index] = new BasicPlot("empty", "resized/basicplot.png", x, y);
-      println(index);
+      //println(index);
       index+=2;
       noFill();
       // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
     }
+    index-=1;
   }
 }
 
-/*
+
 void farming() {
   PImage plot; 
   for (int i=0; i<319; i++) {
@@ -78,7 +95,7 @@ void farming() {
     }
   }
 }
-*/
+
 
 boolean mouseInRng() {
   for (int i=0; i<320; i++) {
