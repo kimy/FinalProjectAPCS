@@ -27,11 +27,19 @@ void plots() {
   for (int i=0; i<1000; i+=100) {
     for (int j=0; j<800; j+=50) {
       image(img, i, j);
+<<<<<<< HEAD
       icors[x][0]=i;
       icors[x][1]=i+100;
       icors[x][2]=j;
       icors[x][3]=j+50;
       farm[x] = new BasicPlot("empty", "resized/basicplot.png", i, j);
+=======
+      icors[index][0]=i;
+      icors[index][1]=i+100;
+      icors[index][2]=j;
+      icors[index][3]=j+50;
+      farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
+>>>>>>> 36cd6b99a1f43a4eedc0e40fa3b28807b11d2b8f
       
       if (i==900){
         x+=1;
@@ -67,6 +75,13 @@ void plots() {
 void farming() {
   PImage plot; 
   for (int i=0; i<295; i++) {
+<<<<<<< HEAD
+=======
+    
+    BasicPlot temp = farm[i];
+    String temp2 = temp.getStatus();
+    boolean temp3 = temp2.equals("plowed");
+>>>>>>> 36cd6b99a1f43a4eedc0e40fa3b28807b11d2b8f
     if (farm[i].getStatus().equals("plowed")) {
       plot = loadImage(farm[i].getImgPath());
       image(plot, farm[i].getXcor(), farm[i].getYcor());
@@ -127,5 +142,13 @@ void plant(){
  farm[index].setStatus("seed");
  //seed = loadImage(farm[index].getImgPath());
  //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
+}
+
+void grow(){
+  for (int i=0;i<295;i++){
+    if (farm[i].getType.equals("00")){
+      if farm[i].getStartTime;
+    }
+  }
 }
 
