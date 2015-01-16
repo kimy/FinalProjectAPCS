@@ -53,6 +53,14 @@ JANUARY 11TH 2015
 -BasicPlot class: We need this class to implement specific properties for each plot.
 
 JANUARY 12TH 2015
+We had a bug where the plot would not stick on the board. 
+
+JANUARY 13TH 2015
+-Worked on the Seed Class
+-Figured out the Time implementation
+
+JANUARY 14TH 2015
+-Continued debugging the basics of our program 
 
 ;-----------------------
 Methods:

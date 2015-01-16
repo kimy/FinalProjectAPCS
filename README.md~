@@ -48,6 +48,11 @@ Although it was a slow start...
 JANUARY 10TH 2015
 -creating quadrilaterals for plot or spaces
 
+JANUARY 11TH 2015
+-Hover Select: A method that is looped in draw() where each grid space is lit up. 
+-BasicPlot class: We need this class to implement specific properties for each plot.
+
+JANUARY 12TH 2015
 
 ;-----------------------
 Methods:
