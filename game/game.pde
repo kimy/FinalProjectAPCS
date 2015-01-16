@@ -14,9 +14,8 @@ void setup() {
 }
 
 void draw() {
-  background(#5BA751);
   //size(1000, 800);
-  //background(#5BA751);
+  background(#5BA751);
   //plots();
   hoverSelect();
   farming();
@@ -25,7 +24,7 @@ void draw() {
 void plots() {
   img = loadImage("resized/basicplot.png");
   int index=0;
-  icors=new int[500][4];
+  icors=new int[295][4];
   //double row; 
   //double col;
 
@@ -54,12 +53,17 @@ for(col = 0; col<9;col+= 0.5){
       icors[index][2]=j;
       icors[index][3]=j+50;
       farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
-      //println(index);
-      index+=2;
+      println(index);
+      if (i==900){
+        index+=1;
+      }else{
+        index+=2;
+      }
+      
       noFill();
       // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
-    index-=1;
+    index--;
   }
 
   index=1;
@@ -77,14 +81,14 @@ for(col = 0; col<9;col+= 0.5){
       noFill();
       // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
     }
-    index-=1;
+    index++;
   }
 }
 
 
 void farming() {
   PImage plot; 
-  for (int i=0; i<319; i++) {
+  for (int i=0; i<295; i++) {
     println(i);
     BasicPlot temp = farm[i];
     String temp2 = temp.getStatus();
@@ -98,7 +102,7 @@ void farming() {
 
 
 boolean mouseInRng() {
-  for (int i=0; i<320; i++) {
+  for (int i=0; i<295; i++) {
     if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
       ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
       x = i;
