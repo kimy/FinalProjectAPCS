@@ -1,87 +1,65 @@
 PImage img, basicPlot;
 int[][] icors;
-int x;
+int index;
 
 BasicPlot[] farm;
 
 void setup() {
   size(1000, 800);
   background(#5BA751);
-  farm = new BasicPlot[500];
+  farm = new BasicPlot[295];
   plots();
 
   //hoverSelect();
 }
 
 void draw() {
-  //size(1000, 800);
   background(#5BA751);
-  //plots();
   hoverSelect();
   farming();
 }
 
 void plots() {
   img = loadImage("resized/basicplot.png");
-  int index=0;
+  int x=0;
   icors=new int[295][4];
-  //double row; 
-  //double col;
-
-  /*
-for(col = 0; col<9;col+= 0.5){
-   for(row=0; row<16; row+= 0.5){
-   int x = (int)col*100;
-   int y = (int)row*50;
-   image(img,x,y);
-   println(index);
-   icors[index][0] = x;
-   icors[index][1] = x + 100;
-   icors[index][2] = y;
-   icors[index][3] = y + 50;
-   farm[index] = new BasicPlot("empty", "resized/basicplot.png", x, y);
-   index += 1;
-   }
-   }
-   */
-
+  
   for (int i=0; i<1000; i+=100) {
     for (int j=0; j<800; j+=50) {
       image(img, i, j);
-      icors[index][0]=i;
-      icors[index][1]=i+100;
-      icors[index][2]=j;
-      icors[index][3]=j+50;
-      farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
-      println(index);
+      icors[x][0]=i;
+      icors[x][1]=i+100;
+      icors[x][2]=j;
+      icors[x][3]=j+50;
+      farm[x] = new BasicPlot("empty", "resized/basicplot.png", i, j);
+      
       if (i==900){
-        index+=1;
+        x+=1;
       }else{
-        index+=2;
+        x+=2;
       }
       
       noFill();
-      // quad(i,j+25,i+50,j+50,i+100,j+25,i+50,j);
     }
-    index--;
+    x--;
   }
 
-  index=1;
+  x=1;
 
-  for (int x=50; x<950; x+=100) {
+  for (int a=50; a<950; a+=100) {
     for (int y=25; y<775; y+=50) {
-      image(img, x, y);
-      icors[index][0]=x;
-      icors[index][1]=x+100;
-      icors[index][2]=y;
-      icors[index][3]=y+50;
-      farm[index] = new BasicPlot("empty", "resized/basicplot.png", x, y);
-      //println(index);
-      index+=2;
+      image(img, a, y);
+      icors[x][0]=a;
+      icors[x][1]=a+100;
+      icors[x][2]=y;
+      icors[x][3]=y+50;
+      farm[x] = new BasicPlot("empty", "resized/basicplot.png", a, y);
+      
+      x+=2;
       noFill();
-      // quad(x,y+25,x+50,y+50,x+100,y+25,x+50,y);
+      
     }
-    index++;
+    x++;
   }
 }
 
@@ -89,14 +67,16 @@ for(col = 0; col<9;col+= 0.5){
 void farming() {
   PImage plot; 
   for (int i=0; i<295; i++) {
-    println(i);
-    BasicPlot temp = farm[i];
-    String temp2 = temp.getStatus();
-    boolean temp3 = temp2.equals("plowed");
     if (farm[i].getStatus().equals("plowed")) {
       plot = loadImage(farm[i].getImgPath());
       image(plot, farm[i].getXcor(), farm[i].getYcor());
+    }else{
+    if(farm[i].getStatus().equals("seed")){
+      plot = loadImage(farm[i].getImgPath());
+      image(plot, farm[i].getXcor(), farm[i].getYcor() - 50);
     }
+    }
+    
   }
 }
 
@@ -105,7 +85,7 @@ boolean mouseInRng() {
   for (int i=0; i<295; i++) {
     if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
       ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
-      x = i;
+      index = i;
       return true;
     }
   }
@@ -115,24 +95,37 @@ boolean mouseInRng() {
 void hoverSelect() {
   if (mouseInRng()) {
     stroke(#FA780D);
-    quad(icors[x][0], icors[x][2]+25, icors[x][0]+50, icors[x][2]+50, icors[x][0]+100, icors[x][2]+25, icors[x][0]+50, icors[x][2]);
+    quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
   } else {
     noStroke();
   }
 }
 
 void mouseClicked() {
-  if (mouseInRng()) {
-    //stroke(#FA780D);
+  if (mouseInRng() && farm[index].getStatus().equals("empty")) {
     plow();
-    //quad(icors[x][0],icors[x][2]+25,icors[x][0]+50,icors[x][2]+50,icors[x][0]+100,icors[x][2]+25,icors[x][0]+50,icors[x][2]);
   }
+  
+  if(mouseInRng() && farm[index].getStatus().equals("plowed")){
+    plant();
+  }
+  
+  
 }
 
 void plow() {  
   //basicPlot = loadImage("resized/basicplot.png");
   //image(basicPlot, icors[x][0], icors[x][2]);
-  farm[x].setImg("resized/basicplot.png");
-  farm[x].setStatus("plowed");
+  farm[index].setImg("resized/basicplot.png");
+  farm[index].setStatus("plowed");
+}
+
+void plant(){
+ BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
+ farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor());
+ farm[index].setImg("pictures/English_Pea_00.png");
+ farm[index].setStatus("seed");
+ //seed = loadImage(farm[index].getImgPath());
+ //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
 }
 
