@@ -53,7 +53,7 @@ for(col = 0; col<9;col+= 0.5){
       icors[index][2]=j;
       icors[index][3]=j+50;
       farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
-      println(index);
+      
       if (i==900){
         index+=1;
       }else{
@@ -89,7 +89,7 @@ for(col = 0; col<9;col+= 0.5){
 void farming() {
   PImage plot; 
   for (int i=0; i<295; i++) {
-    println(i);
+    
     BasicPlot temp = farm[i];
     String temp2 = temp.getStatus();
     boolean temp3 = temp2.equals("plowed");
@@ -134,5 +134,13 @@ void plow() {
   //image(basicPlot, icors[x][0], icors[x][2]);
   farm[x].setImg("resized/basicplot.png");
   farm[x].setStatus("plowed");
+}
+
+void grow(){
+  for (int i=0;i<295;i++){
+    if (farm[i].getType.equals("00")){
+      if farm[i].getStartTime;
+    }
+  }
 }
 
