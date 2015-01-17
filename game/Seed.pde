@@ -1,38 +1,57 @@
-class Seed extends BasicPlot{
- String type, status, imgPath;  
- int time;  
- int dPixels;
- 
- Seed(){
-  super("00");
- }
+class Seed extends BasicPlot {
+  String type, status, imgPath;  
+  int itime, ftime;  
+  int dPixels;
 
-Seed(String cond){
-  super(cond);
+  Seed() {
+    super("00");
+  }
+
+  Seed(String cond) {
+    super(cond);
+  }
+
+  Seed(String cond, String p) {
+    super(cond, p);
+  }
+
+  Seed(String cond, String p, int x, int y, int endT) {
+    super(cond, p, x, y);
+    setStartTime();
+    setEndTime(endT);
+    setType("English_Pea_");
+  }
+
+  void setType(String t) {
+    type = t;
+  }
+
+  String getType() {
+    return type;
+  }
+
+  void setdPixel(int x) {
+    dPixels = x;
+  }
+
+  int getdPixel(int x) {
+    return dPixels;
+  }
+
+  void setStartTime() {
+    itime=second();
+  }
+
+  int getStartTime() {
+    return itime;
+  }
+
+  void setEndTime(int span) {
+    ftime=itime+span;
+  }
+
+  int getEndTime() {
+    return ftime;
+  }
 }
 
-Seed(String cond, String p){
- super(cond, p);
-}
-
-Seed(String cond, String p, int x, int y){
-  super(cond, p, x, y);
-}
-
-void setType(String t){
-  type = t;
-}
-
-String getType(){
-  return type;
-}
-
-void setdPixel(int x){
-  dPixels = x;
-}
-
-int getdPixel(int x){
-  return dPixels;
-}
-
-}

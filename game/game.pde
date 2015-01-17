@@ -15,8 +15,10 @@ void setup() {
 
 void draw() {
   background(#5BA751);
+  buttonShop();
   hoverSelect();
   farming();
+  grow();
 }
 
 void plots() {
@@ -96,6 +98,7 @@ boolean mouseInRng() {
 void hoverSelect() {
   if (mouseInRng()) {
     stroke(#FA780D);
+    noFill();
     quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
   } else {
     noStroke();
@@ -123,20 +126,38 @@ void plow() {
 
 void plant() {
   BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
-  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor());
+  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(),5);
   farm[index].setImg("pictures/English_Pea_00.png");
   farm[index].setStatus("seed");
   //seed = loadImage(farm[index].getImgPath());
   //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
 }
 
-/*
+
 void grow(){
- for (int i=0;i<295;i++){
- if (farm[i].getType().equals("00")){
- if (farm[i].getStartTime()){}
- }
- }
- }
- 
- */
+  for (int i=0;i<295;i++){
+    if (farm[i].getStatus().equals("seed")){
+      println(i);
+      String temp=farm[i].getType();
+      if (farm[i].getType().equals("English_Pea_")){
+        if (second()==farm[i].getEndTime()){
+          farm[i].setImg("pictures/"+farm[i].getType()+"33.png");
+          image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
+        }
+      }
+    }
+  }
+}
+
+void buttonShop(){
+  fill(#FFFDFC);
+  text("Shop",900,700);
+  fill(#934825);
+  noStroke();
+  rect(900,700,40,25,7);
+  
+}
+void shop(){
+  background(#DBD873);
+}
+

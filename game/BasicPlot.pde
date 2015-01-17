@@ -61,7 +61,8 @@ class BasicPlot {
   String getImgPath() {
     return imgPath;
   }
-  
+
+
   void setType(String x){
     type = x;
   }
@@ -70,5 +71,16 @@ class BasicPlot {
     return type;
   }
   
+
+  PImage getImg(){
+    return img;
+  }
+  
+  
+  
+  int getEndTime(){
+    return 0;
+  }
+
 }
 
