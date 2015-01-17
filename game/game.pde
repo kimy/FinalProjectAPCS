@@ -23,30 +23,22 @@ void plots() {
   img = loadImage("resized/basicplot.png");
   int x=0;
   icors=new int[295][4];
-  
+
   for (int i=0; i<1000; i+=100) {
     for (int j=0; j<800; j+=50) {
       image(img, i, j);
-
       icors[x][0]=i;
       icors[x][1]=i+100;
       icors[x][2]=j;
       icors[x][3]=j+50;
       farm[x] = new BasicPlot("empty", "resized/basicplot.png", i, j);
 
-      icors[index][0]=i;
-      icors[index][1]=i+100;
-      icors[index][2]=j;
-      icors[index][3]=j+50;
-      farm[index] = new BasicPlot("empty", "resized/basicplot.png", i, j);
-
-      
-      if (i==900){
+      if (i==900) {
         x+=1;
-      }else{
+      } else {
         x+=2;
       }
-      
+
       noFill();
     }
     x--;
@@ -62,10 +54,9 @@ void plots() {
       icors[x][2]=y;
       icors[x][3]=y+50;
       farm[x] = new BasicPlot("empty", "resized/basicplot.png", a, y);
-      
+
       x+=2;
       noFill();
-      
     }
     x++;
   }
@@ -75,22 +66,18 @@ void plots() {
 void farming() {
   PImage plot; 
   for (int i=0; i<295; i++) {
-
-    
     BasicPlot temp = farm[i];
     String temp2 = temp.getStatus();
     boolean temp3 = temp2.equals("plowed");
-
     if (farm[i].getStatus().equals("plowed")) {
       plot = loadImage(farm[i].getImgPath());
       image(plot, farm[i].getXcor(), farm[i].getYcor());
-    }else{
-    if(farm[i].getStatus().equals("seed")){
-      plot = loadImage(farm[i].getImgPath());
-      image(plot, farm[i].getXcor(), farm[i].getYcor() - 50);
+    } else {
+      if (farm[i].getStatus().equals("seed")) {
+        plot = loadImage(farm[i].getImgPath());
+        image(plot, farm[i].getXcor(), farm[i].getYcor() - 50);
+      }
     }
-    }
-    
   }
 }
 
@@ -116,15 +103,15 @@ void hoverSelect() {
 }
 
 void mouseClicked() {
-  if (mouseInRng() && farm[index].getStatus().equals("empty")) {
-    plow();
-  }
-  
-  else if(mouseInRng() && farm[index].getStatus().equals("plowed")){
+  if (mouseInRng() && farm[index].getStatus().equals("plowed")) {
     plant();
-  }
-  
-  
+  }else{
+    if(mouseInRng() && farm[index].getStatus().equals("empty")){
+  plow();
+    }else{
+      
+}
+    }
 }
 
 void plow() {  
@@ -134,25 +121,22 @@ void plow() {
   farm[index].setStatus("plowed");
 }
 
-void plant(){
- BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
- farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(), 5);
- farm[index].setImg("pictures/English_Pea_00.png");
- farm[index].setStatus("seed");
- //seed = loadImage(farm[index].getImgPath());
- //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
+void plant() {
+  BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
+  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor());
+  farm[index].setImg("pictures/English_Pea_00.png");
+  farm[index].setStatus("seed");
+  //seed = loadImage(farm[index].getImgPath());
+  //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
 }
 
+/*
 void grow(){
-  for (int i=0;i<295;i++){
-    if (farm[i].getStatus().equals("seed")){
-      if (farm[i].getType().equals("00")){
-        if (second()==farm[i].getEndTime()){
-          farm[i].setImg("resized/"+farm[i].getType()+"33");
-          image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor());
-        }
-      }
-    }
-  }
-}
-
+ for (int i=0;i<295;i++){
+ if (farm[i].getType().equals("00")){
+ if (farm[i].getStartTime()){}
+ }
+ }
+ }
+ 
+ */

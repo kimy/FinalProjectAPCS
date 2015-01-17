@@ -1,20 +1,23 @@
 class BasicPlot {
-  String status, imgPath;
+  String type, status, imgPath;
   PImage img;
   int xcor, ycor;
 
   BasicPlot() {
     this("plowed", "resized/basicplot.png");
+    setType("basic");
   }
 
   BasicPlot(String cond) {
     setStatus(cond);
     setImg("resized/basicplot.png");
+    setType("basic");
   }
 
   BasicPlot(String cond, String p) {
     setStatus(cond);
     setImg(p);
+    setType("basic");
   }
 
 
@@ -23,6 +26,7 @@ class BasicPlot {
     setImg(p);
     setXcor(x);
     setYcor(y);
+    setType("basic");
   }   
 
   void setXcor(int x) {
@@ -57,5 +61,14 @@ class BasicPlot {
   String getImgPath() {
     return imgPath;
   }
+  
+  void setType(String x){
+    type = x;
+  }
+  
+  String getType(){
+    return type;
+  }
+  
 }
 
