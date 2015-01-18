@@ -76,7 +76,11 @@ class BasicPlot {
     return img;
   }
   
+  void setStartTime(){
+  }
   
+  void setEndTime(int duration){
+  }
   
   int getEndTime(){
     return 0;

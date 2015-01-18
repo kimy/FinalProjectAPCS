@@ -2,6 +2,7 @@ class Seed extends BasicPlot {
   String type, status, imgPath;  
   int itime, ftime;  
   int dPixels;
+  int cost;
 
   Seed() {
     super("00");
@@ -15,11 +16,12 @@ class Seed extends BasicPlot {
     super(cond, p);
   }
 
-  Seed(String cond, String p, int x, int y, int endT) {
+  Seed(String cond, String p, int x, int y, int endT, int c, String t) {
     super(cond, p, x, y);
     setStartTime();
     setEndTime(endT);
-    setType("English_Pea_");
+    setType(t);
+    setCost(c);
   }
 
   void setType(String t) {
@@ -52,6 +54,14 @@ class Seed extends BasicPlot {
 
   int getEndTime() {
     return ftime;
+  }
+  
+  void setCost(int c){
+    cost=c;
+  }
+  
+  int getCost(){
+    return cost;
   }
 }
 
