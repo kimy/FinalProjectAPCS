@@ -150,18 +150,21 @@ void mouseClicked() {
   }else if(mouseInPlow() && (done==1)){
     cursor(plowTool);
     done=-1;
-  }else if(mouseInPlow() && (done==1)){
+    println(done);
+  }else if(mouseInPlow()){
     cursor(HAND);
     done=1;
+    println(done);
   }else if(mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1)){
     plow();
-  }else if (mouseInBox()){
+  }else if (mouseInBox() && (done==1)){
     shop=shop*-1;
     buy=1;
-  }else if (mouseInSeed()){
+  }else if ((shop==-1) && (mouseInSeed())){
     buy=buy*-1;
   }else if (mouseInBuy() && (buy==-1)){
     newSeed=seeds[n];
+    buy=buy*-1;
   }
 }
   
@@ -177,7 +180,7 @@ void plow() {
 
 void plant(String type) {
   BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
-  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(),5,100);
+  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(),20,100,type);
   farm[index].setImg("pictures/"+type+"_00.png");
   farm[index].setStatus("seed");
   //seed = loadImage(farm[index].getImgPath());
@@ -187,13 +190,29 @@ void plant(String type) {
 
 void grow(){
   for (int i=0;i<276;i++){
-    if (farm[i].getStatus().equals("seed")){
-      if (farm[i].getType().equals("English_Pea")){
-        if (second()==farm[i].getEndTime()){
-          farm[i].setImg("pictures/"+farm[i].getType()+"_33.png");
-          image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
-        }
-      }
+    if ((second()>=farm[i].getEndTime()-15) && (farm[i].getStatus().equals("seed"))){
+      farm[i].setStatus("33");
+    } 
+    if (farm[i].getStatus()=="33"){
+      println(1);
+      farm[i].setImg("pictures/"+farm[i].getType()+"_33.png");
+      image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
+    }
+    if ((second()>=farm[i].getEndTime()-10) && (farm[i].getStatus()=="33")){
+      farm[i].setStatus("66");
+    }
+    if (farm[i].getStatus()=="66"){
+      println(2);
+      farm[i].setImg("pictures/"+farm[i].getType()+"_66.png");
+      image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
+    }
+    if ((second()>=farm[i].getEndTime()-5) && (farm[i].getStatus()=="66")){
+      farm[i].setStatus("100");
+    }
+    if (farm[i].getStatus()=="100"){
+      println(3);
+      farm[i].setImg("pictures/"+farm[i].getType()+"_100.png");
+      image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
     }
   }
 }
@@ -252,6 +271,8 @@ void shop(){
 
 boolean mouseInSeed(){
   for (int i=0;i<7;i++){
+    println(i);
+    int temp=scors[i][0];
     if (((mouseX>scors[i][0]) && (mouseX<=scors[i][1])) &&
       ((mouseY>scors[i][2]) && (mouseY<=scors[i][3]))) {
         n=i;
