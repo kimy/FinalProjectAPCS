@@ -1,6 +1,8 @@
 PImage img, basicPlot;
 int[][] icors;
 int index;
+boolean shop;
+
 
 BasicPlot[] farm;
 
@@ -14,21 +16,26 @@ void setup() {
 }
 
 void draw() {
-  background(#5BA751);
-  buttonShop();
-  hoverSelect();
-  farming();
-  grow();
+  if (shop){
+    shop();
+  }else{
+    background(#5BA751);
+    buttonShop();
+    hoverSelect();
+    farming();
+    grow();
+  }
 }
 
 void plots() {
   img = loadImage("resized/basicplot.png");
   int x=0;
-  icors=new int[295][4];
+  icors=new int[276][4];
 
   for (int i=0; i<1000; i+=100) {
-    for (int j=0; j<800; j+=50) {
+    for (int j=0; j<750; j+=50) {
       image(img, i, j);
+      println(x);
       icors[x][0]=i;
       icors[x][1]=i+100;
       icors[x][2]=j;
@@ -49,8 +56,9 @@ void plots() {
   x=1;
 
   for (int a=50; a<950; a+=100) {
-    for (int y=25; y<775; y+=50) {
+    for (int y=25; y<725; y+=50) {
       image(img, a, y);
+      println(x);
       icors[x][0]=a;
       icors[x][1]=a+100;
       icors[x][2]=y;
@@ -67,7 +75,8 @@ void plots() {
 
 void farming() {
   PImage plot; 
-  for (int i=0; i<295; i++) {
+  for (int i=0; i<276; i++) {
+    println(i);
     BasicPlot temp = farm[i];
     String temp2 = temp.getStatus();
     boolean temp3 = temp2.equals("plowed");
@@ -85,13 +94,21 @@ void farming() {
 
 
 boolean mouseInRng() {
-  for (int i=0; i<295; i++) {
+  for (int i=0; i<276; i++) {
     if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
       ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
       index = i;
       return true;
     }
   }
+  return false;
+}
+
+boolean mouseInBox(){
+  if (((mouseX>900) && (mouseX<=940)) &&
+      ((mouseY>750) && (mouseY<=775))){
+        return true;
+      }
   return false;
 }
 
@@ -110,8 +127,12 @@ void mouseClicked() {
     plant();
   }else{
     if(mouseInRng() && farm[index].getStatus().equals("empty")){
-  plow();
-    }else{
+    plow();
+  }else{
+    if (mouseInBox()){
+      shop();
+      shop=true;
+    }
       
 }
     }
@@ -135,10 +156,8 @@ void plant() {
 
 
 void grow(){
-  for (int i=0;i<295;i++){
+  for (int i=0;i<276;i++){
     if (farm[i].getStatus().equals("seed")){
-      println(i);
-      String temp=farm[i].getType();
       if (farm[i].getType().equals("English_Pea_")){
         if (second()==farm[i].getEndTime()){
           farm[i].setImg("pictures/"+farm[i].getType()+"33.png");
@@ -151,10 +170,12 @@ void grow(){
 
 void buttonShop(){
   fill(#FFFDFC);
-  text("Shop",900,700);
-  fill(#934825);
+  text("Shop",900,750);
+ 
+  
   noStroke();
-  rect(900,700,40,25,7);
+  fill(#934825);
+  rect(900,750,40,25,7);
   
 }
 void shop(){
