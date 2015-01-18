@@ -1,12 +1,13 @@
 PImage img, basicPlot;
 int[][] icors;
 int index;
-boolean shop;
+int shop;
 
 
 BasicPlot[] farm;
 
 void setup() {
+  shop=1;
   size(1000, 800);
   background(#5BA751);
   farm = new BasicPlot[295];
@@ -16,7 +17,7 @@ void setup() {
 }
 
 void draw() {
-  if (shop){
+  if (shop==-1){
     shop();
   }else{
     background(#5BA751);
@@ -131,11 +132,10 @@ void mouseClicked() {
   }else{
     if (mouseInBox()){
       shop();
-      shop=true;
+      shop=shop*-1;
     }
-      
-}
-    }
+  }
+  }
 }
 
 void plow() {  
@@ -178,7 +178,19 @@ void buttonShop(){
   rect(900,750,40,25,7);
   
 }
+
+void buttonExit(){
+  fill(#FFFDFC);
+  text("Exit",900,750);
+ 
+  
+  noStroke();
+  fill(#934825);
+  rect(900,750,40,25,7);
+}
 void shop(){
   background(#DBD873);
+  buttonExit();
+  
 }
 
