@@ -1,15 +1,18 @@
-PImage img, basicPlot;
+PImage img, basicPlot, plowTool;
 int[][] icors, scors;
 int index, n;
-int shop, buy;
+int shop, buy, done;
 String[] seeds;
 String newSeed;
+boolean bought, plowSelected;
 
 BasicPlot[] farm;
 
 void setup() {
+  cursor(HAND);
   shop=1;
   buy=1;
+  done=1;
   size(1000, 800);
   background(#5BA751);
   farm = new BasicPlot[295];
@@ -26,6 +29,7 @@ void draw() {
     }
   }else{
     background(#5BA751);
+    plower();
     buttonShop();
     hoverSelect();
     farming();
@@ -33,6 +37,18 @@ void draw() {
   }
 }
 
+void plower(){
+  plowTool=loadImage("pictures/plow.png");
+  image(plowTool,350,750);
+}
+
+boolean mouseInPlow(){
+  if (((mouseX>350) && (mouseX<=387)) &&
+      ((mouseY>750) && (mouseY<=798))){
+        return true;
+      }
+  return false;
+}
 void plots() {
   img = loadImage("resized/basicplot.png");
   int x=0;
@@ -129,14 +145,22 @@ void hoverSelect() {
 }
 
 void mouseClicked() {
-  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1)) {
+  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1)){
     plant(newSeed);
-  }else if(mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1)){
+  }else if(mouseInPlow() && (done==1)){
+    cursor(plowTool);
+    done=-1;
+  }else if(mouseInPlow() && (done==1)){
+    cursor(HAND);
+    done=1;
+  }else if(mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1)){
     plow();
   }else if (mouseInBox()){
     shop=shop*-1;
+    buy=1;
   }else if (mouseInSeed()){
     buy=buy*-1;
+  }else if (mouseInBuy() && (buy==-1)){
     newSeed=seeds[n];
   }
 }
@@ -244,6 +268,7 @@ boolean mouseInBuy(){
       }
   return false;
 }
+
 void buy(){
   fill(#FFFDFC);
   text("Buy",200,750);
