@@ -88,7 +88,15 @@ class BasicPlot {
   void setVal(int v){
   }
   
+  int getVal(){
+    return 0;
+  }
+  
   void setEXP(int e){
+  }
+  
+  int getEXP(){
+    return 0;
   }
 
 }

@@ -1,10 +1,11 @@
 PImage img, basicPlot, plowTool, harvestTool;
 int[][] icors, scors;
 int index, n;
-int shop, buy, done, myHarvest, totalProfit, money, exp, level;
+int shop, buy, done, myHarvest, totalProfit, money, exp, expTemp, level;
 String[] seeds;
 String newSeed, harvestedSeed;
 boolean bought, harvestSelected;
+ArrayList<PImage> crops;
 
 BasicPlot[] farm;
 
@@ -12,6 +13,7 @@ void setup() {
   cursor(HAND);
   setBooleans();
   money=10000;
+  level=1;
   size(1000, 800);
   background(#5BA751);
   farm = new BasicPlot[295];
@@ -37,12 +39,12 @@ void draw() {
     background(#5BA751);
     plower();
     harvester();
-    
     buttonShop();
     buttonHarvest();
     hoverSelect();
     farming();
     grow();
+    levelup();
   }
    stats();
 }
@@ -275,22 +277,40 @@ void grow(){
 
 void harvest(){
   harvestedSeed=farm[index].getType();
+  println(harvestedSeed);
+  PImage ptemp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
+  crops=new ArrayList<PImage>(10);
+  crops.add(ptemp);
   totalProfit+=farm[index].getVal();
+  expTemp=farm[index].getEXP();
   BasicPlot temp=new BasicPlot("harvested", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
   farm[index]=new BasicPlot("harvested", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
+  exp+=expTemp;
   
 }
 
 void myHarvest(){
-  background(#DBD873);
  
-  PImage temp;
+  background(#DBD873);
+
   int x=150;
   int y=100;
   int interval=0;
+  for (int i=0;i<crops.size();i++){
+    image(crops.get(i),x,y);
+    x+=200;
+    interval++;
+    if (interval==3){
+      interval=0;
+      x=150;
+      y+=100;
+    }
+  }
+  /*
   for (int i=0;i<276;i++){
+   
     if (farm[i].getStatus()=="harvested"){
-      temp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
+      
       image(temp,x,y);
       x+=200;
       interval++;
@@ -300,7 +320,7 @@ void myHarvest(){
         y+=100;
       }
     }
-  }
+  }*/
 }
 
 
@@ -421,12 +441,7 @@ void clearance(){
   background(#DBD873);
   
 }
-void stats(){
-  fill(#FFFDFC);
-  text("Moneys: "+money, 100, 750);
-  text("EXP: "+exp+"/100", 200, 750);
-  text("LEVEL: "+level, 300, 750);
-}
+
 
 void destroyWallet(String type){
   if (type=="English_Pea"){
@@ -446,6 +461,13 @@ void destroyWallet(String type){
   }
 }
 
+void levelup(){
+  if (exp>=level*1000){
+    exp=exp-level*1000;
+    level+=1;
+    
+  }
+}
 
 void setBooleans(){
   shop=1;
@@ -456,3 +478,9 @@ void setBooleans(){
   totalProfit=0;
 }
 
+void stats(){
+  fill(#FFFDFC);
+  text("Moneys: "+money, 100, 750);
+  text("EXP: "+exp+"/"+1000*level, 200, 750);
+  text("LEVEL: "+level, 300, 750);
+}
