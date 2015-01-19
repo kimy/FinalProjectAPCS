@@ -5,19 +5,19 @@ class BasicPlot {
 
   BasicPlot() {
     this("plowed", "resized/basicplot.png");
-    setType("basic");
+    //setType("basic");
   }
 
   BasicPlot(String cond) {
     setStatus(cond);
     setImg("resized/basicplot.png");
-    setType("basic");
+    //setType("basic");
   }
 
   BasicPlot(String cond, String p) {
     setStatus(cond);
     setImg(p);
-    setType("basic");
+    //setType("basic");
   }
 
 
@@ -26,7 +26,6 @@ class BasicPlot {
     setImg(p);
     setXcor(x);
     setYcor(y);
-    setType("basic");
   }   
 
   void setXcor(int x) {
@@ -84,6 +83,12 @@ class BasicPlot {
   
   int getEndTime(){
     return 0;
+  }
+  
+  void setVal(int v){
+  }
+  
+  void setEXP(int e){
   }
 
 }

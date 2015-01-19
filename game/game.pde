@@ -1,18 +1,17 @@
-PImage img, basicPlot, plowTool;
+PImage img, basicPlot, plowTool, harvestTool;
 int[][] icors, scors;
 int index, n;
-int shop, buy, done;
+int shop, buy, done, myHarvest, money, exp, level;
 String[] seeds;
-String newSeed;
-boolean bought, plowSelected;
+String newSeed, harvestedSeed;
+boolean bought, harvestSelected;
 
 BasicPlot[] farm;
 
 void setup() {
   cursor(HAND);
-  shop=1;
-  buy=1;
-  done=1;
+  setBooleans();
+  money=10000;
   size(1000, 800);
   background(#5BA751);
   farm = new BasicPlot[295];
@@ -27,10 +26,15 @@ void draw() {
     if (buy==-1){
       buy();
     }
+  }else if(myHarvest==1){
+    myHarvest();
   }else{
     background(#5BA751);
     plower();
+    harvester();
+    stats();
     buttonShop();
+    buttonHarvest();
     hoverSelect();
     farming();
     grow();
@@ -42,6 +46,12 @@ void plower(){
   image(plowTool,350,750);
 }
 
+void harvester(){
+  harvestTool=loadImage("pictures/harvest.png");
+  harvestTool.resize(0,70);
+  image(harvestTool, 400, 730);
+}
+
 boolean mouseInPlow(){
   if (((mouseX>350) && (mouseX<=387)) &&
       ((mouseY>750) && (mouseY<=798))){
@@ -49,6 +59,23 @@ boolean mouseInPlow(){
       }
   return false;
 }
+
+boolean mouseInHarvest(){
+  if (((mouseX>400) && (mouseX<=440)) &&
+      ((mouseY>730) && (mouseY<=800))){
+        return true;
+      }
+  return false;
+}
+
+boolean mouseInHarvestButton(){
+  if (((mouseX>800) && (mouseX<=840)) &&
+      ((mouseY>750) && (mouseY<=775))){
+        return true;
+      }
+  return false;
+}
+
 void plots() {
   img = loadImage("resized/basicplot.png");
   int x=0;
@@ -105,11 +132,12 @@ void farming() {
     if (farm[i].getStatus().equals("plowed")) {
       plot = loadImage(farm[i].getImgPath());
       image(plot, farm[i].getXcor(), farm[i].getYcor());
-    } else {
-      if (farm[i].getStatus().equals("seed")) {
+    } else if (farm[i].getStatus().equals("seed")) {
         plot = loadImage(farm[i].getImgPath());
         image(plot, farm[i].getXcor(), farm[i].getYcor() - 50);
-      }
+    } else if (farm[i].getStatus().equals("harvested")) {
+        plot = loadImage("resized/basicplot.png");
+        image(plot, farm[i].getXcor(), farm[i].getYcor());
     }
   }
 }
@@ -145,26 +173,43 @@ void hoverSelect() {
 }
 
 void mouseClicked() {
-  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1)){
+  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)){
     plant(newSeed);
+    bought=false;
   }else if(mouseInPlow() && (done==1)){
     cursor(plowTool);
     done=-1;
-    println(done);
+    
   }else if(mouseInPlow()){
     cursor(HAND);
     done=1;
-    println(done);
-  }else if(mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1)){
+    
+  }else if(mouseInHarvest() && (!harvestSelected)){
+    cursor(harvestTool);
+    harvestSelected=true;
+    
+  }else if(mouseInHarvest()){
+    cursor(HAND);
+    harvestSelected=false;
+    
+  }else if(mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1) && (myHarvest==-1)){
     plow();
-  }else if (mouseInBox() && (done==1)){
+  }else if(mouseInRng() && farm[index].getStatus().equals("100") && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)){
+    
+    harvest();
+    
+  }else if (mouseInHarvestButton() && (done==1) && (!harvestSelected)){
+    myHarvest=myHarvest*-1;
+  }else if (mouseInBox() && (done==1) && (myHarvest==-1)){
     shop=shop*-1;
     buy=1;
   }else if ((shop==-1) && (mouseInSeed())){
-    buy=buy*-1;
+    buy=-1;
   }else if (mouseInBuy() && (buy==-1)){
     newSeed=seeds[n];
-    buy=buy*-1;
+    buy=1;
+    bought=true;
+    destroyWallet(newSeed);
   }
 }
   
@@ -180,9 +225,11 @@ void plow() {
 
 void plant(String type) {
   BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
-  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(),20,100,type);
+  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(),20,type);
   farm[index].setImg("pictures/"+type+"_00.png");
   farm[index].setStatus("seed");
+  farm[index].setVal(300+100*n);
+  farm[index].setEXP(100+100*n);
   //seed = loadImage(farm[index].getImgPath());
   //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
 }
@@ -215,6 +262,54 @@ void grow(){
       image(farm[i].getImg(),farm[i].getXcor(),farm[i].getYcor()-50);
     }
   }
+}
+
+void harvest(){
+  harvestedSeed=farm[index].getType();
+  BasicPlot temp=new BasicPlot("harvested", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
+  farm[index]=new BasicPlot("harvested", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
+  
+}
+
+void myHarvest(){
+  background(#DBD873);
+  buttonExit2();
+  PImage temp;
+  int x=150;
+  int y=100;
+  int interval=0;
+  for (int i=0;i<276;i++){
+    if (farm[i].getStatus()=="harvested"){
+      temp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
+      image(temp,x,y);
+      x+=200;
+      interval++;
+      if (interval==3){
+        interval=0;
+        x=150;
+        y+=100;
+      }
+    }
+  }
+}
+
+void buttonExit2(){
+  fill(#FFFDFC);
+  text("Exit",800,750);
+ 
+  
+  noStroke();
+  fill(#934825);
+  rect(800,750,40,25,7);
+}
+
+void buttonHarvest(){
+  fill(#FFFDFC);
+  text("Harvest",800,750);
+ 
+  noStroke();
+  fill(#934825);
+  rect(800,750,40,25,7);
 }
 
 void buttonShop(){
@@ -298,5 +393,38 @@ void buy(){
   noStroke();
   fill(#934825);
   rect(200,750,40,25,7);
+}
+
+void stats(){
+  fill(#FFFDFC);
+  text("Moneys: "+money, 100, 750);
+  text("EXP: "+exp+"/100", 200, 750);
+  text("LEVEL: "+level, 300, 750);
+}
+
+void destroyWallet(String type){
+  if (type=="English_Pea"){
+    money-=100;
+  }else if (type=="Long_Onion"){
+    money-=200;
+  }else if (type=="Organic_Blueberries"){
+    money-=300;
+  }else if (type=="Super_Cranberry"){
+    money-=400;
+  }else if (type=="Super_Pepper"){
+    money-=500;
+  }else if (type=="Super_Strawberry"){
+    money-=600;
+  }else if (type=="White_Corn"){
+    money-=700;
+  }
+}
+
+void setBooleans(){
+  shop=1;
+  buy=1;
+  done=1;
+  harvestSelected=false;
+  myHarvest=-1;
 }
 
