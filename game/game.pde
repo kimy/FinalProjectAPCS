@@ -1,7 +1,7 @@
 PImage img, basicPlot, plowTool, harvestTool;
 int[][] icors, scors;
 int index, n;
-int shop, buy, done, myHarvest, money, exp, level;
+int shop, buy, done, myHarvest, totalProfit, money, exp, level;
 String[] seeds;
 String newSeed, harvestedSeed;
 boolean bought, harvestSelected;
@@ -28,17 +28,23 @@ void draw() {
     }
   }else if(myHarvest==1){
     myHarvest();
+    
+    if (totalProfit==0){
+      background(#DBD873);
+    }
+    sell();
   }else{
     background(#5BA751);
     plower();
     harvester();
-    stats();
+    
     buttonShop();
     buttonHarvest();
     hoverSelect();
     farming();
     grow();
   }
+   stats();
 }
 
 void plower(){
@@ -176,11 +182,11 @@ void mouseClicked() {
   if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)){
     plant(newSeed);
     bought=false;
-  }else if(mouseInPlow() && (done==1)){
+  }else if(mouseInPlow() && (done==1) && (myHarvest==-1)){
     cursor(plowTool);
     done=-1;
     
-  }else if(mouseInPlow()){
+  }else if(mouseInPlow() && (myHarvest==-1)){
     cursor(HAND);
     done=1;
     
@@ -200,12 +206,15 @@ void mouseClicked() {
     
   }else if (mouseInHarvestButton() && (done==1) && (!harvestSelected)){
     myHarvest=myHarvest*-1;
+  }else if (mouseInBuySell() && (buy==1)){
+    money+=totalProfit;
+    totalProfit=0;
   }else if (mouseInBox() && (done==1) && (myHarvest==-1)){
     shop=shop*-1;
     buy=1;
   }else if ((shop==-1) && (mouseInSeed())){
     buy=-1;
-  }else if (mouseInBuy() && (buy==-1)){
+  }else if (mouseInBuySell() && (buy==-1)){
     newSeed=seeds[n];
     buy=1;
     bought=true;
@@ -266,6 +275,7 @@ void grow(){
 
 void harvest(){
   harvestedSeed=farm[index].getType();
+  totalProfit+=farm[index].getVal();
   BasicPlot temp=new BasicPlot("harvested", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
   farm[index]=new BasicPlot("harvested", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
   
@@ -273,7 +283,7 @@ void harvest(){
 
 void myHarvest(){
   background(#DBD873);
-  buttonExit2();
+ 
   PImage temp;
   int x=150;
   int y=100;
@@ -292,6 +302,7 @@ void myHarvest(){
     }
   }
 }
+
 
 void buttonExit2(){
   fill(#FFFDFC);
@@ -377,8 +388,8 @@ boolean mouseInSeed(){
   return false;
 }
 
-boolean mouseInBuy(){
-  if (((mouseX>200) && (mouseX<=240)) &&
+boolean mouseInBuySell(){
+  if (((mouseX>600) && (mouseX<=640)) &&
       ((mouseY>750) && (mouseY<=775))){
         return true;
       }
@@ -387,14 +398,29 @@ boolean mouseInBuy(){
 
 void buy(){
   fill(#FFFDFC);
-  text("Buy",200,750);
+  text("Buy",600,750);
  
   
   noStroke();
   fill(#934825);
-  rect(200,750,40,25,7);
+  rect(600,750,40,25,7);
 }
 
+void sell(){
+  fill(#FFFDFC);
+  text("Sell All",600,750);
+ 
+  
+  noStroke();
+  fill(#934825);
+  rect(600,750,40,25,7);
+   buttonExit2();
+}
+
+void clearance(){
+  background(#DBD873);
+  
+}
 void stats(){
   fill(#FFFDFC);
   text("Moneys: "+money, 100, 750);
@@ -420,11 +446,13 @@ void destroyWallet(String type){
   }
 }
 
+
 void setBooleans(){
   shop=1;
   buy=1;
   done=1;
   harvestSelected=false;
   myHarvest=-1;
+  totalProfit=0;
 }
 
