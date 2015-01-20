@@ -211,6 +211,7 @@ void mouseClicked() {
   }else if (mouseInBuySell() && (buy==1)){
     money+=totalProfit;
     totalProfit=0;
+    crops.clear();
   }else if (mouseInBox() && (done==1) && (myHarvest==-1)){
     shop=shop*-1;
     buy=1;
@@ -279,7 +280,7 @@ void harvest(){
   harvestedSeed=farm[index].getType();
   println(harvestedSeed);
   PImage ptemp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
-  crops=new ArrayList<PImage>(10);
+  
   crops.add(ptemp);
   totalProfit+=farm[index].getVal();
   expTemp=farm[index].getEXP();
@@ -476,6 +477,7 @@ void setBooleans(){
   harvestSelected=false;
   myHarvest=-1;
   totalProfit=0;
+  crops=new ArrayList<PImage>(10);
 }
 
 void stats(){
