@@ -457,7 +457,7 @@ void shop() {
   seeds[3]="Super_Cranberry";
   seeds[4]="Super_Pepper";
   seeds[5]="Super_Strawberry";
-  seeds[6]="White_Corn";
+  seeds[6]="Super_Pumpkins";
 
   background(#DBD873);
   buttonExit();
@@ -541,7 +541,7 @@ void destroyWallet(String type) {
     money-=500;
   } else if (type=="Super_Strawberry") {
     money-=600;
-  } else if (type=="White_Corn") {
+  } else if (type=="Super_Pumpkins") {
     money-=700;
   }
 }
