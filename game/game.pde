@@ -233,6 +233,7 @@ void plow() {
   //image(basicPlot, icors[x][0], icors[x][2]);
   farm[index].setImg("resized/basicplot.png");
   farm[index].setStatus("plowed");
+  exp += 20;
 }
 
 void plant(String type) {
@@ -242,6 +243,7 @@ void plant(String type) {
   farm[index].setStatus("seed");
   farm[index].setVal(300+100*n);
   farm[index].setEXP(100+100*n);
+  exp += 50;
   //seed = loadImage(farm[index].getImgPath());
   //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
 }
@@ -382,6 +384,7 @@ void shop(){
   int interval=0;
   for (int i=0;i<7;i++){
     image(loadImage("pictures/"+seeds[i]+"-icon.png"),x,y);
+    text(seeds[i], x, y);
     scors[i][0]=x;
     scors[i][1]=x+100;
     scors[i][2]=y;
@@ -466,6 +469,7 @@ void levelup(){
   if (exp>=level*1000){
     exp=exp-level*1000;
     level+=1;
+    money += 1000;
     
   }
 }
