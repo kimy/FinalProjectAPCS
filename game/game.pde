@@ -110,9 +110,6 @@ void farming() {
     } else if (farm[i].getStatus().equals("seed")) {
       plot = loadImage(farm[i].getImgPath());
       image(plot, farm[i].getXcor(), farm[i].getYcor() - 50);
-    } else if (farm[i].getStatus().equals("harvested")) {
-      plot = loadImage("resized/basicplot.png");
-      image(plot, farm[i].getXcor(), farm[i].getYcor());
     }
   }
 }
@@ -168,7 +165,7 @@ void plow() {
 
 void plant(String type) {
   BasicPlot temp = new BasicPlot(farm[index].getStatus(), farm[index].getImgPath(), farm[index].getXcor(), farm[index].getYcor());
-  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(), 20, type);
+  farm[index] = new Seed(temp.getStatus(), temp.getImgPath(), temp.getXcor(), temp.getYcor(), 30, type);
   farm[index].setImg("pictures/"+type+"_00.png");
   farm[index].setStatus("seed");
   farm[index].setVal(300+100*n);
@@ -181,7 +178,7 @@ void plant(String type) {
 
 void grow() {
   for (int i=0; i<276; i++) {
-    if ((second()>=farm[i].getEndTime()-15) && (farm[i].getStatus().equals("seed"))) {
+    if ((second()>=farm[i].getEndTime()-25) && (farm[i].getStatus().equals("seed"))) {
       farm[i].setStatus("33");
     } 
     if (farm[i].getStatus()=="33") {
@@ -189,7 +186,7 @@ void grow() {
       farm[i].setImg("pictures/"+farm[i].getType()+"_33.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
-    if ((second()>=farm[i].getEndTime()-10) && (farm[i].getStatus()=="33")) {
+    if ((second()>=farm[i].getEndTime()-20) && (farm[i].getStatus()=="33")) {
       farm[i].setStatus("66");
     }
     if (farm[i].getStatus()=="66") {
@@ -197,7 +194,7 @@ void grow() {
       farm[i].setImg("pictures/"+farm[i].getType()+"_66.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
-    if ((second()>=farm[i].getEndTime()-5) && (farm[i].getStatus()=="66")) {
+    if ((second()>=farm[i].getEndTime()-15) && (farm[i].getStatus()=="66")) {
       farm[i].setStatus("100");
     }
     if (farm[i].getStatus()=="100") {
@@ -205,21 +202,41 @@ void grow() {
       farm[i].setImg("pictures/"+farm[i].getType()+"_100.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
+
+    if ((second()>= farm[i].getEndTime()) && (farm[i].getStatus()=="100")) {
+      farm[i].setStatus("withered");
+    }
+
+    if (farm[i].getStatus() =="withered") {
+      println(4);
+      farm[i].setImg("pictures/"+farm[i].getType()+"_withered.png");
+      image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
+    }
   }
 }
 
 void harvest() {
-  harvestedSeed=farm[index].getType();
-  println(harvestedSeed);
-  PImage ptemp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
+  if (farm[index].getStatus() == "100") {
+    harvestedSeed=farm[index].getType();
+    println(harvestedSeed);
+    PImage ptemp=loadImage("pictures/"+harvestedSeed+"_Bushel-icon.png");
 
-  crops.add(ptemp);
-  totalProfit+=farm[index].getVal();
-  expTemp=farm[index].getEXP();
-  BasicPlot temp=new BasicPlot("harvested", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
-  farm[index]=new BasicPlot("harvested", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
-  exp+=expTemp;
+    crops.add(ptemp);
+    totalProfit+=farm[index].getVal();
+    expTemp=farm[index].getEXP();
+    BasicPlot temp=new BasicPlot("empty", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
+    farm[index]=new BasicPlot("empty", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
+    exp+=expTemp;
+  } else {
+    //if withered
+    if (farm[index].getStatus() == "withered") {
+      exp += 5;
+      BasicPlot a = new BasicPlot("plowed", "resized/basicplot.png", farm[index].getXcor(), farm[index].getYcor());
+      farm[index] = new BasicPlot("plowed", "resized/basicplot.png", a.getXcor(), a.getYcor());
+    }
+  }
 }
+
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -325,7 +342,7 @@ void mouseClicked() {
     harvestSelected=false;
   } else if (mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1) && (myHarvest==-1)) {
     plow();
-  } else if (mouseInRng() && farm[index].getStatus().equals("100") && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)) {
+  } else if (mouseInRng() && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)) {
 
     harvest();
   } else if (mouseInHarvestButton() && (done==1) && (!harvestSelected)) {
