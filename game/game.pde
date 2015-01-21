@@ -366,7 +366,8 @@ void mouseClicked() {
     buy=-1;
   } else if (mouseInBuySell() && (buy==-1)) {
     newSeed=seeds[n];
-    shop=shop*-1;
+    shop=1;
+    buy=1;
     bought=true;
   }
 }
