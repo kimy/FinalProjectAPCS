@@ -344,7 +344,6 @@ void mouseClicked() {
   } else if (mouseInHarvest() && (!harvestSelected)) {
     cursor(harvestTool);
     harvestSelected=true;
-   
   } else if (mouseInHarvest()) {
     cursor(HAND);
     harvestSelected=false;
@@ -369,7 +368,6 @@ void mouseClicked() {
     newSeed=seeds[n];
     shop=shop*-1;
     bought=true;
-    
   }
 }
 
@@ -449,8 +447,8 @@ void buttonExit() {
   rect(900, 750, 40, 25, 7);
 }
 void shop() {
-  seeds=new String[7];
-  scors=new int[7][4];
+  seeds=new String[8];
+  scors=new int[8][4];
   seeds[0]="English_Pea";
   seeds[1]="Long_Onion";
   seeds[2]="Organic_Blueberries";
@@ -458,13 +456,14 @@ void shop() {
   seeds[4]="Super_Pepper";
   seeds[5]="Super_Strawberry";
   seeds[6]="Super_Pumpkins";
+  seeds[7]="Super_Grape";
 
   background(#DBD873);
   buttonExit();
   int x=150;
   int y=100;
   int interval=0;
-  for (int i=0; i<7; i++) {
+  for (int i=0; i<8; i++) {
     image(loadImage("pictures/"+seeds[i]+"-icon.png"), x, y);
     text(seeds[i], x, y);
     scors[i][0]=x;
@@ -482,7 +481,7 @@ void shop() {
 }
 
 boolean mouseInSeed() {
-  for (int i=0; i<7; i++) {
+  for (int i=0; i<8; i++) {
     println(i);
     int temp=scors[i][0];
     if (((mouseX>scors[i][0]) && (mouseX<=scors[i][1])) &&
@@ -543,6 +542,8 @@ void destroyWallet(String type) {
     money-=600;
   } else if (type=="Super_Pumpkins") {
     money-=700;
+  } else if (type=="Super_Grape") {
+    money -=500;
   }
 }
 
