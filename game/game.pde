@@ -49,40 +49,8 @@ void draw() {
   stats();
 }
 
-void plower() {
-  plowTool=loadImage("pictures/plow.png");
-  image(plowTool, 350, 750);
-}
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void harvester() {
-  harvestTool=loadImage("pictures/harvest.png");
-  harvestTool.resize(0, 70);
-  image(harvestTool, 400, 730);
-}
-
-boolean mouseInPlow() {
-  if (((mouseX>350) && (mouseX<=387)) &&
-    ((mouseY>750) && (mouseY<=798))) {
-    return true;
-  }
-  return false;
-}
-
-boolean mouseInHarvest() {
-  if (((mouseX>400) && (mouseX<=440)) &&
-    ((mouseY>730) && (mouseY<=800))) {
-    return true;
-  }
-  return false;
-}
-
-boolean mouseInHarvestButton() {
-  if (((mouseX>800) && (mouseX<=840)) &&
-    ((mouseY>750) && (mouseY<=775))) {
-    return true;
-  }
-  return false;
-}
 
 void plots() {
   img = loadImage("resized/basicplot.png");
@@ -129,7 +97,6 @@ void plots() {
   }
 }
 
-
 void farming() {
   PImage plot; 
   for (int i=0; i<276; i++) {
@@ -148,26 +115,6 @@ void farming() {
       image(plot, farm[i].getXcor(), farm[i].getYcor());
     }
   }
-}
-
-
-boolean mouseInRng() {
-  for (int i=0; i<276; i++) {
-    if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
-      ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
-      index = i;
-      return true;
-    }
-  }
-  return false;
-}
-
-boolean mouseInBox() {
-  if (((mouseX>900) && (mouseX<=940)) &&
-    ((mouseY>750) && (mouseY<=775))) {
-    return true;
-  }
-  return false;
 }
 
 void hoverSelect() {
@@ -208,72 +155,7 @@ void hoverSelect() {
   }
 }
 
-
-
-void validSpace() {
-  stroke(#14F524);
-  strokeWeight(3);
-  noFill();
-  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
-}
-
-void invalidSpace() {
-  stroke(#F51436);
-  strokeWeight(3);
-  noFill();
-  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
-}
-
-
-void neutralSpace() {
-  stroke(#FAFF08);
-  strokeWeight(3);
-  noFill();
-  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
-}
-
-
-void mouseClicked() {
-  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)) {
-    plant(newSeed);
-    bought=false;
-  } else if (mouseInPlow() && (done==1) && (myHarvest==-1)) {
-    cursor(plowTool);
-    done=-1;
-  } else if (mouseInPlow() && (myHarvest==-1)) {
-    cursor(HAND);
-    done=1;
-  } else if (mouseInHarvest() && (!harvestSelected)) {
-    cursor(harvestTool);
-    harvestSelected=true;
-  } else if (mouseInHarvest()) {
-    cursor(HAND);
-    harvestSelected=false;
-  } else if (mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1) && (myHarvest==-1)) {
-    plow();
-  } else if (mouseInRng() && farm[index].getStatus().equals("100") && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)) {
-
-    harvest();
-  } else if (mouseInHarvestButton() && (done==1) && (!harvestSelected)) {
-    myHarvest=myHarvest*-1;
-  } else if (mouseInBuySell() && (buy==1)) {
-    money+=totalProfit;
-    totalProfit=0;
-    crops.clear();
-  } else if (mouseInBox() && (done==1) && (myHarvest==-1)) {
-    shop=shop*-1;
-    buy=1;
-  } else if ((shop==-1) && (mouseInSeed())) {
-    buy=-1;
-  } else if (mouseInBuySell() && (buy==-1)) {
-    newSeed=seeds[n];
-    buy=1;
-    bought=true;
-    destroyWallet(newSeed);
-  }
-}
-
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void plow() {  
@@ -338,6 +220,134 @@ void harvest() {
   farm[index]=new BasicPlot("harvested", "resized/basicplot.png", temp.getXcor(), temp.getYcor());
   exp+=expTemp;
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void plower() {
+  plowTool=loadImage("pictures/plow.png");
+  image(plowTool, 350, 750);
+}
+
+void harvester() {
+  harvestTool=loadImage("pictures/harvest.png");
+  harvestTool.resize(0, 70);
+  image(harvestTool, 400, 730);
+}
+
+
+
+boolean mouseInPlow() {
+  if (((mouseX>350) && (mouseX<=387)) &&
+    ((mouseY>750) && (mouseY<=798))) {
+    return true;
+  }
+  return false;
+}
+
+boolean mouseInHarvest() {
+  if (((mouseX>400) && (mouseX<=440)) &&
+    ((mouseY>730) && (mouseY<=800))) {
+    return true;
+  }
+  return false;
+}
+
+boolean mouseInHarvestButton() {
+  if (((mouseX>800) && (mouseX<=840)) &&
+    ((mouseY>750) && (mouseY<=775))) {
+    return true;
+  }
+  return false;
+}
+
+boolean mouseInRng() {
+  for (int i=0; i<276; i++) {
+    if (((mouseX>icors[i][0]+20) && (mouseX<=icors[i][1]-20)) &&
+      ((mouseY>icors[i][2]+15) && (mouseY<=icors[i][3]-15))) {
+      index = i;
+      return true;
+    }
+  }
+  return false;
+}
+
+boolean mouseInBox() {
+  if (((mouseX>900) && (mouseX<=940)) &&
+    ((mouseY>750) && (mouseY<=775))) {
+    return true;
+  }
+  return false;
+}
+
+
+
+//lights up the space green
+void validSpace() {
+  stroke(#14F524);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
+//lights up the space red
+void invalidSpace() {
+  stroke(#F51436);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
+//lights up the space yellow
+void neutralSpace() {
+  stroke(#FAFF08);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
+
+void mouseClicked() {
+  if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)) {
+    plant(newSeed);
+    bought=false;
+  } else if (mouseInPlow() && (done==1) && (myHarvest==-1)) {
+    cursor(plowTool);
+    done=-1;
+  } else if (mouseInPlow() && (myHarvest==-1)) {
+    cursor(HAND);
+    done=1;
+  } else if (mouseInHarvest() && (!harvestSelected)) {
+    cursor(harvestTool);
+    harvestSelected=true;
+  } else if (mouseInHarvest()) {
+    cursor(HAND);
+    harvestSelected=false;
+  } else if (mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1) && (myHarvest==-1)) {
+    plow();
+  } else if (mouseInRng() && farm[index].getStatus().equals("100") && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)) {
+
+    harvest();
+  } else if (mouseInHarvestButton() && (done==1) && (!harvestSelected)) {
+    myHarvest=myHarvest*-1;
+  } else if (mouseInBuySell() && (buy==1)) {
+    money+=totalProfit;
+    totalProfit=0;
+    crops.clear();
+  } else if (mouseInBox() && (done==1) && (myHarvest==-1)) {
+    shop=shop*-1;
+    buy=1;
+  } else if ((shop==-1) && (mouseInSeed())) {
+    buy=-1;
+  } else if (mouseInBuySell() && (buy==-1)) {
+    newSeed=seeds[n];
+    buy=1;
+    bought=true;
+    destroyWallet(newSeed);
+  }
+}
+
+
 
 void myHarvest() {
 
