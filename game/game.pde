@@ -49,7 +49,7 @@ void draw() {
   stats();
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 void plots() {
@@ -159,7 +159,6 @@ void hoverSelect() {
 }
 
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void plow() {  
@@ -246,7 +245,7 @@ void harvest() {
 
 
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 void plower() {
   plowTool=loadImage("pictures/plow.png");
@@ -334,19 +333,22 @@ void neutralSpace() {
 void mouseClicked() {
   if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)) {
     plant(newSeed);
-    bought=false;
+    destroyWallet(newSeed);
   } else if (mouseInPlow() && (done==1) && (myHarvest==-1)) {
     cursor(plowTool);
     done=-1;
+    bought=false;
   } else if (mouseInPlow() && (myHarvest==-1)) {
     cursor(HAND);
     done=1;
   } else if (mouseInHarvest() && (!harvestSelected)) {
     cursor(harvestTool);
     harvestSelected=true;
+   
   } else if (mouseInHarvest()) {
     cursor(HAND);
     harvestSelected=false;
+    bought=false;
   } else if (mouseInRng() && farm[index].getStatus().equals("empty") && (shop==1) && (done==-1) && (myHarvest==-1)) {
     plow();
   } else if (mouseInRng() && (shop==1) && (done==1) && (myHarvest==-1) && (harvestSelected)) {
@@ -365,9 +367,9 @@ void mouseClicked() {
     buy=-1;
   } else if (mouseInBuySell() && (buy==-1)) {
     newSeed=seeds[n];
-    buy=1;
+    shop=shop*-1;
     bought=true;
-    destroyWallet(newSeed);
+    
   }
 }
 
