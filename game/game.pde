@@ -174,37 +174,64 @@ void hoverSelect() {
   if (mouseInRng()) {
     if (farm[index].getStatus().equals("empty")) {
       if (done==1) {
-        stroke(#FAFF08);
-        strokeWeight(3);
-        noFill();
-        quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+        if (harvestSelected) {
+          invalidSpace();
+        } else {
+          neutralSpace();
+        }
       } else {
         if (done==-1) {
-          stroke(#14F524);
-          strokeWeight(3);
-          noFill();
-          quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+          validSpace();
         }
       }
     } else {
       if (farm[index].getStatus().equals("plowed")) {
         if (done==1) {
-          stroke(#F51436);
-          strokeWeight(3);
-          noFill();
-          quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+          if (harvestSelected) {
+            invalidSpace();
+          } else {
+            neutralSpace();
+          }
         } else {
           if (done==-1) {
-            stroke(#F51436);
-            strokeWeight(3);
-            noFill();
-            quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+            invalidSpace();
+          }
+        }
+      } else {
+        if (farm[index].getStatus().equals("100")) {
+          if (harvestSelected) {
+            validSpace();
           }
         }
       }
     }
   }
 }
+
+
+
+void validSpace() {
+  stroke(#14F524);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
+void invalidSpace() {
+  stroke(#F51436);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
+
+void neutralSpace() {
+  stroke(#FAFF08);
+  strokeWeight(3);
+  noFill();
+  quad(icors[index][0], icors[index][2]+25, icors[index][0]+50, icors[index][2]+50, icors[index][0]+100, icors[index][2]+25, icors[index][0]+50, icors[index][2]);
+}
+
 
 void mouseClicked() {
   if (mouseInRng() && farm[index].getStatus().equals("plowed") && (shop==1) && (bought) && (myHarvest==-1)) {
