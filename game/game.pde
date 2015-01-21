@@ -19,7 +19,7 @@ void setup() {
   farm = new BasicPlot[295];
   plots();
 
-  //hoverSelect();
+  
 }
 
 void draw() {
@@ -162,8 +162,7 @@ void hoverSelect() {
 
 
 void plow() {  
-  //basicPlot = loadImage("resized/basicplot.png");
-  //image(basicPlot, icors[x][0], icors[x][2]);
+  
   farm[index].setImg("resized/basicplot.png");
   farm[index].setStatus("plowed");
   exp += 20;
@@ -177,8 +176,7 @@ void plant(String type) {
   farm[index].setVal(300+100*n);
   farm[index].setEXP(100+100*n);
   exp += 50;
-  //seed = loadImage(farm[index].getImgPath());
-  //image(seed, farm[index].getXcor(), farm[index].getYcor() - 50);
+ 
 }
 
 
@@ -188,7 +186,7 @@ void grow() {
       farm[i].setStatus("33");
     } 
     if (farm[i].getStatus()=="33") {
-      println(1);
+   
       farm[i].setImg("pictures/"+farm[i].getType()+"_33.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
@@ -196,7 +194,7 @@ void grow() {
       farm[i].setStatus("66");
     }
     if (farm[i].getStatus()=="66") {
-      println(2);
+   
       farm[i].setImg("pictures/"+farm[i].getType()+"_66.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
@@ -204,7 +202,7 @@ void grow() {
       farm[i].setStatus("100");
     }
     if (farm[i].getStatus()=="100") {
-      println(3);
+      
       farm[i].setImg("pictures/"+farm[i].getType()+"_100.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
@@ -214,7 +212,7 @@ void grow() {
     }
 
     if (farm[i].getStatus() =="withered") {
-      println(4);
+      
       farm[i].setImg("pictures/"+farm[i].getType()+"_withered.png");
       image(farm[i].getImg(), farm[i].getXcor(), farm[i].getYcor()-50);
     }
@@ -391,21 +389,7 @@ void myHarvest() {
       y+=100;
     }
   }
-  /*
-  for (int i=0;i<276;i++){
-   
-   if (farm[i].getStatus()=="harvested"){
-   
-   image(temp,x,y);
-   x+=200;
-   interval++;
-   if (interval==3){
-   interval=0;
-   x=150;
-   y+=100;
-   }
-   }
-   }*/
+
 }
 
 

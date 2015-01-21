@@ -62,6 +62,45 @@ JANUARY 13TH 2015
 JANUARY 14TH 2015
 -Continued debugging the basics of our program 
 
+JANUARY 15TH 2015
+-Discovered major flaw in indices of farm[]. 
+-Attempted to fix
+
+JANUARY 16TH 2015
+-Worked on grow fxn.
+-completed "first draft" of seed class
+-Working "plow"
+
+JANUARY 17TH 2015
+-Successfully implemented plow and plant methods
+-Figured out basic algorithm for grow
+
+JANUARY 18TH 2015
+-Created the shop with a variety of fxns
+-Created "buttons" to access and exit the shop
+-Now able to plant different seeds
+-Partially working grow fxn.
+
+JANUARY 19TH 2015
+-made "My Harvest" part
+-fully working grow fxn
+-when harvest, player profits
+-added money, exp
+
+JANUARY 20TH 2015
+-upgraded hoverSelect
+-implemented withered plants
+-reworked buy fxn for testing efficiency as well as lowering player frustration
+-added grapes and pumpkins
+-fixed sellAll button
+
+<<<<<<<<<<<IMPORTANT NOTE>>>>>>>>>>>>>>
+
+An inconsistent bug occurs every now and then in which the seeds will suddenly
+cease to grow. There was no noticeable pattern of the bug and an error did not
+pop up, so it is almost impossible to find.
+
+
 ;-----------------------
 Methods:
 plow: on mouse click a basicplot appears on the screen
